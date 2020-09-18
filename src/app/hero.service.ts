@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -12,6 +12,10 @@ import { MessageService } from './message.service';
 export class HeroService {
   private heroesUrl = `${environment.baseUrl}/heroes`;
 
+  private httpOptions =  {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+  };
+
   constructor(
     private http: HttpClient,
     private messageService: MessageService
@@ -20,7 +24,8 @@ export class HeroService {
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
-      tap(() => this.log('fetched heroes')),
+      //tap(() => this.log(`fetched ${heroes.length} heroes`)),
+      tap(() => this.log(`fetched heroes`)),
       catchError(this.handleError<Hero[]>('getHeroes', []))
     );
   }
@@ -31,7 +36,7 @@ export class HeroService {
 
     return this.http.get<Hero>(url).pipe(
       tap(() => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<Hero>('getHeroes'))
+      catchError(this.handleError<Hero>('getHero'))
     );
   }
 
@@ -45,6 +50,31 @@ export class HeroService {
     };
   }
 
+
+  addHero( hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>( this.heroesUrl, hero, this.httpOptions).pipe(
+      tap( (newHero) => this.log(`added Hero id=${newHero.id}`)),
+      catchError(this.handleError<Hero>('addHero'))
+    );
+  }
+
+  updateHero(hero: Hero): Observable<Hero>  {
+    const url = `${this.heroesUrl}/${hero.id}`;
+
+    return this.http.put<Hero>(url, hero, this.httpOptions).pipe(
+      tap(() => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<Hero>('updateHero'))
+    );
+  }
+
+  deleteHero(hero: Hero): Observable<any> {
+    const url = `${this.heroesUrl}/${hero.id}`;
+
+    return this.http.delete<any>(url, this.httpOptions).pipe(
+      tap( () => this.log(`deleted hero id=${hero.id}`)),
+      catchError(this.handleError<Hero>('deleteHero'))
+    );
+  }
 
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);

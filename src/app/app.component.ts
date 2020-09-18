@@ -8,9 +8,9 @@ import { NavItem } from './nav-item';
 })
 export class AppComponent {
 
-  title = 'Tour of Heroes';
+  vTitle = 'Tour of Heroes';
 
-  navItems: NavItem[] = [
+  vNavItems: NavItem[] = [
       { path: '/dashboard', text: 'Dashboard' },
       { path: '/heroes', text: 'Heroes' },
     ];

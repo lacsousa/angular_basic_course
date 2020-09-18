@@ -16,6 +16,11 @@
           [(ngModel)]="hero.name" />
       </div>
 
+      <button class="btn btn-primary mr-3" type="button"
+        [disabled]="!hero.name.trim()" (click)="save()">
+        Salvar
+      </button>
+
       <button class="btn btn-secondary" type="button" (click)="goBack()">
         Back
       </button>

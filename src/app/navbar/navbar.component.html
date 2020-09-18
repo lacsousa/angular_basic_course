@@ -12,20 +12,17 @@
   </button>
 
   <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed">
+
     <ul class="navbar-nav mr-auto">
-      <li
-        class="nav-item"
-        [routerLinkActive]="['active']"
-        *ngFor="let navItem of navItems"
-      >
-        <a
-          class="nav-link"
+      <li class="nav-item" [routerLinkActive]="['active']"
+        *ngFor="let navItem of navItems">
+        <a class="nav-link"
           [routerLink]="navItem.path"
-          (click)="isMenuCollapsed = true"
-        >
+          (click)="isMenuCollapsed = true" >
           {{ navItem.text }}
         </a>
       </li>
     </ul>
+
   </div>
 </nav>
