@@ -41,7 +41,7 @@ import { environment } from 'src/environments/environment';
     environment.production
     ? []
     : HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      delay: 700,
+      delay: 1000,
     }),
   ],
   providers: [InMemoryDataService],
