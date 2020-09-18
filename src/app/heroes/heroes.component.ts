@@ -13,6 +13,8 @@ export class HeroesComponent implements OnInit {
 
   heroes: Hero[];
 
+  filter = '';
+
   constructor(private heroService: HeroService, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -45,5 +47,10 @@ export class HeroesComponent implements OnInit {
         this.heroes = this.heroes.filter( (heroItem) => heroItem !== hero);
       }
     });
+  }
+
+  onFilter(term: string) {
+    this.filter = term;
+    // console.log(term);
   }
 }

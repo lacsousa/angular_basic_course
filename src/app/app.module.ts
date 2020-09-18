@@ -13,6 +13,9 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { MessagesComponent } from './messages/messages.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HeroAddComponent } from './hero-add/hero-add.component';
+import { SearchInputComponent } from './search-input/search-input.component';
+import { HeroFilterPipe } from './hero-filter.pipe';
+import { HeroSearchComponent } from './hero-search/hero-search.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { HeroAddComponent } from './hero-add/hero-add.component';
     NavbarComponent,
     DashboardComponent,
     HeroAddComponent,
+    SearchInputComponent,
+    HeroFilterPipe,
+    HeroSearchComponent,
   ],
   imports: [
     BrowserModule,
