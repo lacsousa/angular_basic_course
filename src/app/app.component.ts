@@ -20,7 +20,6 @@ export class AppComponent {
 
     if (!token) {
       const randomToken = Math.random().toString(36).substr(-10);
-
       localStorage.setItem('token', randomToken);
     }
   }
