@@ -1,15 +1,43 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Hero } from '../hero.model';
+import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-hero-search',
-  templateUrl: './hero-search.component.html',
-  styleUrls: ['./hero-search.component.css']
+  template: `
+    <app-search-input (search)="onSearch($event)"></app-search-input>
+
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let hero of heroes$ | async">
+        <a routerLink="/heroes/{{ hero.id }}">
+          {{ hero.name }}
+        </a>
+      </li>
+    </ul>
+  `,
 })
 export class HeroSearchComponent implements OnInit {
+  heroes$: Observable<Hero[]>; // $ no final é uma convenção para mostrar que vc tem uma propriedade do tipo Observable
+  private searchTerms = new Subject<string>();
 
-  constructor() { }
+  constructor(private heroService: HeroService) {}
 
   ngOnInit(): void {
+    this.getHeroes();
   }
 
+  getHeroes() {
+    this.heroes$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.heroService.searchHeroes(term))
+    );
+  }
+
+  onSearch(term: string) {
+    this.searchTerms.next(term);
+  }
 }
+

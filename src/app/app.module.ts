@@ -16,6 +16,8 @@ import { HeroAddComponent } from './hero-add/hero-add.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { HeroFilterPipe } from './hero-filter.pipe';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
+import { environment } from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -36,8 +38,10 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     AppRoutingModule,
     NgbCollapseModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      delay: 1000,
+    environment.production
+    ? []
+    : HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
+      delay: 700,
     }),
   ],
   providers: [InMemoryDataService],

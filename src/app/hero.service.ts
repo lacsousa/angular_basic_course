@@ -13,7 +13,10 @@ export class HeroService {
   private heroesUrl = `${environment.baseUrl}/heroes`;
 
   private httpOptions =  {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token'),
+    })
   };
 
   constructor(
@@ -86,7 +89,7 @@ export class HeroService {
       .pipe(
         tap((heroes) =>
           heroes && heroes.length
-            ? this.log(`found heroes matching "${term}"`)
+            ? this.log(`found ${heroes.length} heroes matching "${term}"`)
             : this.log(`no heroes matching "${term}"`)
         ),
         catchError(this.handleError<Hero[]>('searchHeroes', []))

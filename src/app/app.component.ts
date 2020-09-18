@@ -14,4 +14,14 @@ export class AppComponent {
       { path: '/dashboard', text: 'Dashboard' },
       { path: '/heroes', text: 'Heroes' },
     ];
+
+  constructor(){
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      const randomToken = Math.random().toString(36).substr(-10);
+
+      localStorage.setItem('token', randomToken);
+    }
+  }
 }
